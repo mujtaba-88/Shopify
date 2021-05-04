@@ -1,0 +1,106 @@
+<link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+<script src="https://unpkg.com/flickity@2/dist/flickity.pkgd.min.js"></script>
+ 
+ 
+ 
+Collection-slider.liquid
+---------------------------------------
+ {% comment %} Capture assign different flickity options that can be called in the main product carousel. {% endcomment %}
+{%- capture flickity_options -%}
+{
+  "prevNextButtons": true,
+  "pageDots": false,
+  "contain": true,
+  "cellAlign": "left",
+  "groupCells": true,
+  "arrowShape": {"x0": 20, "x1": 60, "y1": 40, "x2": 60, "y2": 35, "x3": 25}
+}
+{%- endcapture -%}
+ 
+<div class="featured-collection-slider page-width">
+{% if section.settings.title != blank %}
+<div class="section-header text-center">
+  <h2>{{ section.settings.title | escape }}</h2>
+</div>
+{% endif %}
+ 
+{%- assign collection = collections[section.settings.collection] -%}
+{%- assign product_limit = section.settings.product_count -%}
+ 
+    <div class="products-carousel js-flickity" data-flickity='{{ flickity_options }}'>
+      {% for product in collection.products limit: product_limit %}
+        <div class="carousel-cell">
+          <a href="{{ product.url | within: collection }}">
+            <img class="img-explore" src="{{ product.featured_image | img_url: 'master'}}">
+            <h4>{{ product.title }}</h4>
+            <p>{{ product.price | money }}</p>
+          </a>
+      </div>  
+    {% endfor %}
+    </div>
+</div>
+ 
+<style>
+.featured-collection-slider{
+  padding-left: 55px;
+  padding-right: 55px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+.featured-collection-slider .carousel-cell{
+  width:25%;
+  padding: 0 15px;
+  display: block;
+}
+.flickity-button:disabled{
+  pointer-events: all!important;
+}
+@media screen and (max-width: 920px){
+  .featured-collection-slider{
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+  .featured-collection-slider .carousel-cell{
+    width:50%;
+  }
+}
+@media screen and (max-width: 767px){
+  .featured-collection-slider .carousel-cell{
+    width:100%;
+  }
+}
+</style>
+ 
+{% schema %}
+{
+  "name": "Collection Slider",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "min": 4,
+      "max": 12,
+      "label": "Number of products to display",
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "category": "Collection",
+      "name": "Collection Slider",
+      "settings": {}
+    }
+  ]
+}
+{% endschema %}
