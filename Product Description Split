@@ -1,0 +1,18 @@
+{% comment %} Put this part in the main description so it can show the part before <!--SPLIT--> keyword  {% endcomment %}
+<div class="product-single__description rte">
+         {% if product.description contains '<!--SPLIT-->' %}
+          {{ product.description | split:'<!--SPLIT-->' | first}}
+         {% else %}
+          {{ product.description }}
+         {% endif %}
+        </div>
+        
+        {% comment %} Enter this part where you want to show the part appear after Split keyword. {% endcomment %}
+        
+         {% if product.description contains '<!--SPLIT-->' %}
+          <div class="product-single__description rte">
+         {{ product.description | split:'<!--SPLIT-->' | last}} 
+        </div>
+      {% endif %}
+        
+        
