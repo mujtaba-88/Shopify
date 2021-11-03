@@ -1,0 +1,23 @@
+ <select name="" id="sort-by" class="select-picker">
+                                    {% assign sort_by = collection.sort_by | default: collection.default_sort_by %}
+                                    {%- for option in collection.sort_options -%}
+                                    {%- assign sortOptionsToSkip = "title-ascending,title-descending, price-ascending, price-descending" -%}
+                                     {%- if sortOptionsToSkip contains option.value -%}
+                                      {%- continue -%}
+                                  {%- endif -%} 
+                                    <option value="{{ option.value }}" {% if option.value == sort_by %}selected="selected"{% endif %}>
+                                        {% case option.value %}
+                                        {%- when "best-selling" -%}
+                                        Popularity
+                                    {%- when "created-ascending" -%}
+                                          Old first
+                                      {%- when "created-descending" -%}
+                                          Newest
+                                      {%- when "manual" -%}
+                                          Rating
+                                        {%- else -%}
+                                            {{ option.name }}
+                                        {%- endcase -%}
+                                        </option>
+                                    {%- endfor -%}
+                                    </select>
