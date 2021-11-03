@@ -1,0 +1,208 @@
+
+
+
+
+ {% for block in section.blocks %}
+
+   {% if block.type == 'image_banner' %}
+     
+     {% include 'image-banner' %}
+
+     {% elsif block.type == 'text-left-image-right' %}
+      
+      {% include 'text-left-image-right' %}
+
+      {% elsif block.type == 'text-right-image-left' %}
+      
+      {% include 'text-right-image-left' %}
+
+      {% elsif block.type == 'video-banner' %}
+      
+      {% assign videoId = block.settings.video_link | slice: -11, 11 %}
+      {% include 'video-banner' videoId:videoId  %}
+
+      {% elsif block.type == 'recommended-product' %}
+      
+      {% include 'recommended-product' %}
+
+      {% endif %}
+
+ {% endfor %}  
+
+
+   {% style %}
+div#shopify-section-about-us {
+    margin-top: -19vh;
+}
+
+
+
+{% endstyle %}
+
+
+ {% schema %}
+ {
+ "name" : "content block",
+ "blocks": [
+   {
+    "name": "Image Banner",
+    "type":"image_banner",
+    "settings" : [
+      {    
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    },
+   {    
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Introduce Yourself"
+    },
+  {    
+        "type": "text",
+        "id": "paragraph",
+        "label": "Paragraph"
+    },
+  {    
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+       "default": "Click Here"
+    },
+  {    
+        "type": "url",
+        "id": "button",
+        "label": "Url"
+    } 
+    ]
+
+      },
+      {
+    "name": "Video with Banner",
+    "type": "video-banner",
+    "settings": [
+ {    
+        "type": "video_url",
+        "id": "video_link",
+        "label": "Video",
+        "accept": [ 
+        "youtube"
+      ],
+      "default": "https://www.youtube.com/watch?v=_9VUPq3SxOc"
+    },
+   {    
+        "type": "text",
+        "id": "heading",
+        "label": "Heading", 
+        "default": "Introduce Yourself"
+    },
+  {    
+        "type": "richtext",
+        "id": "paragraph",
+        "label": "Paragraph"
+    }
+
+]
+  },
+  {
+    "name": "Text Left Image Right",
+    "type": "text-left-image-right",
+    "settings": [
+  {    
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    },
+   {    
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Introduce Yourself"
+    },
+  {    
+         "type": "richtext",
+        "id": "paragraph",
+        "label": "Paragraph",
+		"default": "<p>Write Details Here</p>"
+    },
+  {    
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+       "default": "Click Here"
+    },
+  {    
+        "type": "url",
+        "id": "button",
+        "label": "Url"
+    }
+
+]
+  },
+    {
+    "name": "Text Right Image Left",
+    "type": "text-right-image-left",
+    "settings": [
+  {    
+        "type": "image_picker",
+        "id": "image",
+        "label": "Image"
+    },
+   {    
+        "type": "text",
+        "id": "heading",
+        "label": "Heading",
+        "default": "Introduce Yourself"
+    },
+  {    
+        "type": "richtext",
+        "id": "paragraph2",
+        "label": "Paragraph",
+		"default": "<p>Write Details Here</p>"
+    },
+  {    
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+       "default": "Click Here"
+    },
+  {    
+        "type": "url",
+        "id": "button",
+        "label": "Url"
+    }
+
+]
+  },
+  {
+  "name": "Collection Slider",
+  "type": "recommended-product",
+  "settings": [
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Heading",
+      "default": "Featured Collection"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "Collection"
+    },
+    {
+      "type": "range",
+      "id": "product_count",
+      "min": 4,
+      "max": 12,
+      "label": "Number of products to display",
+      "default": 4
+    }
+  ]
+}
+
+   ]
+ }
+ {% endschema %}
+
+ 
